@@ -5,7 +5,15 @@ export RH_OFFLINE_TOKEN_PATH="$HOME/rh-api-offline-token"
 
 #########################################################
 ## Required variables
-CREATE_DEVICE_NAME_GROUP=true
-DEVICE_GROUP_NAME="my-device-name-group"
-CREATE_IMAGE=true
-IMAGE_NAME="test-image"
+export CREATE_DEVICE_NAME_GROUP=true
+export DEVICE_GROUP_NAME="my-device-name-group"
+export CREATE_IMAGE=true
+
+#########################################################
+## Image Atrributes
+export IMAGE_NAME="test-image"
+export USERNAME="admin"
+export DISTRIBUTION="rhel-85"
+export DESCRIPTION="sample description"
+export PACKAGES="curl\nnet-tools\npodman\nwget"
+export ARCH="x86_64"

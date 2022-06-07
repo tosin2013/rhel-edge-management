@@ -1,9 +1,17 @@
 #!/bin/bash 
 
 source authenticate-to-api.sh
-export IMAGE_NAME=testapp
-#https://rh-edge-tarballs-prod.s3.us-east-1.amazonaws.com/6186556/isos/${IMAGE_NAME}.iso
+source rhel-edge-vars.sh
 
+if [ -z "$ACTIVE_TOKEN" ]; then
+  echo "No active token found. Please run authenticate-to-api.sh first."
+  exit 1
+fi
+
+if [ -z "$IMAGE_NAME" ]; then
+  echo "No image name found. Please set IMAGE_NAME in rhel-edge-vars.sh"
+  exit 1
+fi   
 
 INSTALLER_ID=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/edge/v1/images' \

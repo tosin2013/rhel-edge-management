@@ -1,6 +1,16 @@
 #!/bin/bash
 source authenticate-to-api.sh
-export DEVICE_GROUP_NAME=tosins
+source rhel-edge-vars.sh
+
+if [ -z "$ACTIVE_TOKEN" ]; then
+  echo "No active token found. Please run authenticate-to-api.sh first."
+  exit 1
+fi
+
+if [ -z $DEVICE_GROUP_NAME ]; then
+  echo "No device group name found. Please set DEVICE_GROUP_NAME in rhel-edge-vars.sh"
+  exit 1
+fi
 
 curl 'https://console.redhat.com/api/edge/v1/device-groups/' \
   -H "Authorization: Bearer $ACTIVE_TOKEN" \
