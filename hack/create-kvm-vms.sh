@@ -60,9 +60,8 @@ VIRSH_VM=$(sudo virsh list --all | grep ${IMAGE_NAME}-${DEV_VM_NAME} || true);
 if [[ -z "${VIRSH_VM}" ]]; then
     echo "  Creating VM ${DEV_VM_NAME} ..."
     nohup sudo virt-install ${LIBVIRT_LIKE_OPTIONS} --mac="${MAC_ADDRESS}" --name=${IMAGE_NAME}-${DEV_VM_NAME} --vcpus "sockets=${CP_CPU_SOCKETS},cores=${CP_CPU_CORES},threads=1" --memory="$(expr ${CP_RAM_GB} \* 1024)" --disk "size=${DISK_SIZE},path=${LIBVIRT_VM_PATH}/${IMAGE_NAME}-${DEV_VM_NAME}.qcow2,cache=none,format=qcow2" &
-fi 
-sleep 3
+    sleep 3
 else
-echo "  VM ${DEV_VM_NAME} already exists ..."
+    echo "  VM ${DEV_VM_NAME} already exists ..."
 fi
 
