@@ -1,6 +1,6 @@
 RHEL Edge Deployment 
 --------------------
-Rhel Edge deployment using https://console.redhat.com/beta/edge/.
+Rhel Edge deployment using https://console.redhat.com/edge/fleet-management.
 
 ## API Documentation
 https://console.redhat.com/#components-schemas-Device
@@ -32,8 +32,14 @@ vim rhel-edge-vars.sh
 
 
 ## Running bootstrap install manually  
-> The bootstrap install script calls the scripts below in order. If you would like to walk thru the script call the scripts below. 
+> The bootstrap install script calls the scripts below in order. If you would like to walk thru the script call the scripts below.
+
+source rhel-edge-vars.sh && source authenticate-to-api.sh
 * `scripts/authenticate-to-api.sh` - authenticate to rhel console api 
 * `scripts/create-device-groups.sh` - Create device group on the redhat console website
 * `scripts/create-image-name.sh` - Create and build rhel image on redhat console.
 * `scripts/download-iso.sh` - Download ISO for redhat console
+
+## Links
+[Create RHEL for Edge images and configure automated management](https://access.redhat.com/documentation/en-us/edge_management/2022/html-single/create_rhel_for_edge_images_and_configure_automated_management/index#doc-wrapper)
+[Working with systems in the edge management application](https://access.redhat.com/documentation/en-us/edge_management/2022/html-single/working_with_systems_in_the_edge_management_application/index)

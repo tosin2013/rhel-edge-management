@@ -1,5 +1,5 @@
 #!/bin/bash 
-
+set -xe
 source authenticate-to-api.sh
 source rhel-edge-vars.sh
 

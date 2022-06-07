@@ -17,3 +17,9 @@ export DISTRIBUTION="rhel-85"
 export DESCRIPTION="sample description"
 export PACKAGES="curl\nnet-tools\npodman\nwget"
 export ARCH="x86_64"
+
+#########################################################
+## Optional variables
+# osinfo-query os
+export OS_VARIANT="rhel8.5"
+export DEV_VM_NAME="test-dev-vm"
