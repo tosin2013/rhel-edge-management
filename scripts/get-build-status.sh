@@ -39,8 +39,12 @@ BUILD_STATUS=$(curl -s -X 'GET' \
  fi
 
   if [ "$BUILD_STATUS" ==  '"SUCCESS"' ]; then
-  echo "Build was a $BUILD_STATUS for ${IMAGE_NAME}"
-  exit 0
- fi
+    echo "Build was a $BUILD_STATUS for ${IMAGE_NAME}"
+    exit 0
+  fi
+  
+  if [ -z "$BUILD_STATUS" ]; then
+    source authenticate-to-api.sh
+  fi
  sleep 10s
 done
