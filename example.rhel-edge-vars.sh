@@ -15,7 +15,7 @@ export IMAGE_NAME="test-image"
 export USERNAME="admin"
 export DISTRIBUTION="rhel-85"
 export DESCRIPTION="sample description"
-export PACKAGES="curl\nnet-tools\npodman\nwget\nvim\ntar\nbind-utils\ngit"
+export PACKAGES="curl net-tools podman get vim tar bind-utils git"
 export ARCH="x86_64"
 
 #########################################################
