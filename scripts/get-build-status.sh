@@ -16,7 +16,7 @@ echo "Getting Status for ${IMAGE_NAME}"
 ID=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/edge/v1/images' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[]| select(.Name=="'${IMAGE_NAME}'") | .ID')
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.Name=="'${IMAGE_NAME}'") | .ID')
 
 echo "${IMAGE_NAME} IMAGE ID: $ID"
 

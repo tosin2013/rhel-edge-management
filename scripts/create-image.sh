@@ -49,8 +49,9 @@ done
 IMAGE_PACKAGES=$(cat  /tmp/packages.txt  | jq --slurp .)
 echo ${IMAGE_PACKAGES} | sed "s/'//g"
 echo ${IMAGE_PACKAGES} | sed "s/'//g" >/tmp/packages_escaped.txt
+export SSH_KEY_INFO=$(cat $SSH_PUB_KEY_PATH)
 
-echo  '{"name":"'${IMAGE_NAME}'","version":0,"description":"'${DESCRIPTION}'","distribution":"'${DISTRIBUTION}'","imageType":"rhel-edge-installer","packages": '$(cat  /tmp/packages_escaped.txt)',"outputTypes":["rhel-edge-installer","rhel-edge-commit"],"commit":{"arch":"'${ARCH}'"},"installer":{"username":"'${USERNAME}'","sshkey": "'$(echo $SSH_KEY_INFO)'"}}' > /tmp/post_data.txt
+echo  '{"name":"'${IMAGE_NAME}'","version":0,"description":"'${DESCRIPTION}'","distribution":"'${DISTRIBUTION}'","imageType":"rhel-edge-installer","packages": '$(cat  /tmp/packages_escaped.txt)',"outputTypes":["rhel-edge-installer","rhel-edge-commit"],"commit":{"arch":"'${ARCH}'"},"installer":{"username":"'${USERNAME}'","sshkey": "'$(echo $SSH_KEY_INFO)'","thirdPartyRepositories":[]}}' > /tmp/post_data.txt
 cat  /tmp/post_data.txt
 
 curl 'https://console.redhat.com/api/edge/v1/images' \

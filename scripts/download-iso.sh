@@ -16,7 +16,7 @@ fi
 INSTALLER_ID=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/edge/v1/images' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[]| select(.Name=="'${IMAGE_NAME}'") | .InstallerID')
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.Name=="'${IMAGE_NAME}'") | .InstallerID')
 
 if [ -z ${INSTALLER_ID} ];
 then 
@@ -28,21 +28,21 @@ echo "INSTALLER_ID is ${INSTALLER_ID}"
 STATUS=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/edge/v1/images' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[]| select(.Name=="'${IMAGE_NAME}'") |select(.InstallerID=='${INSTALLER_ID}') |.Status'  | tr -d '"')
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.Name=="'${IMAGE_NAME}'") |select(.InstallerID=='${INSTALLER_ID}') |.Status'  | tr -d '"')
 
-if [ ${STATUS} != "SUCCESS" ];
+if [ "${STATUS}" != "SUCCESS" ];
 then 
   echo "${STATUS} does not equal SUCCESS"
   exit 1
 fi 
-echo ".data[]| select(.Name=="testapp") |select(.InstallerID==118) |.Installer.Status"
+echo ".data[0]| select(.Name=="${IMAGE_NAME}") |select(.InstallerID==${INSTALLER_ID}) |.Installer.Status"
 echo "INSTALLER_ID is ${INSTALLER_ID}"
 STATUS=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/edge/v1/images' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[]| select(.Name=="'${IMAGE_NAME}'") |select(.InstallerID=='${INSTALLER_ID}') |.Installer.Status'  | tr -d '"')
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.Name=="'${IMAGE_NAME}'") |select(.InstallerID=='${INSTALLER_ID}') |.Installer.Status'  | tr -d '"')
 
-if [ ${STATUS} != "SUCCESS" ];
+if [ "${STATUS}" != "SUCCESS" ];
 then 
   echo "${STATUS} does not equal SUCCESS"
   exit 1
@@ -53,7 +53,7 @@ echo "Get IMAGE_BUILD_ISO_URL"
 IMAGE_BUILD_ISO_URL=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/edge/v1/images' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[]| select(.Name=="'${IMAGE_NAME}'") |select(.InstallerID=='${INSTALLER_ID}') | .Installer.ImageBuildISOURL'  | tr -d '"')
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.Name=="'${IMAGE_NAME}'") |select(.InstallerID=='${INSTALLER_ID}') | .Installer.ImageBuildISOURL'  | tr -d '"')
 
 if [ -z ${IMAGE_BUILD_ISO_URL} ];
 then 
