@@ -37,7 +37,7 @@ vim rhel-edge-vars.sh
 source rhel-edge-vars.sh && source authenticate-to-api.sh
 * `scripts/authenticate-to-api.sh` - authenticate to rhel console api 
 * `scripts/create-device-groups.sh` - Create device group on the redhat console website
-* `scripts/create-image-name.sh` - Create and build rhel image on redhat console.
+* `scripts/create-image.sh` - Create and build rhel image on redhat console.
 * `scripts/download-iso.sh` - Download ISO from redhat console
 
 ## Links

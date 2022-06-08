@@ -21,3 +21,8 @@ cd ~/qubinode-installer
 ./qubinode-installer -m host
 ./qubinode-installer -m kcli
 ```
+
+### Create vm to test rhel edge device
+```
+hack/create-kvm-vms.sh
+```

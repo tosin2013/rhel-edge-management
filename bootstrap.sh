@@ -11,7 +11,7 @@ if [ $CREATE_DEVICE_NAME_GROUP == true ]; then
 fi 
 
 if [ $CREATE_IMAGE_NAME == true ]; then 
- ./scripts/create-image-name.sh
+ ./scripts/create-image.sh
 fi
 
 ./scripts/download-iso.sh
