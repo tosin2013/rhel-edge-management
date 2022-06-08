@@ -37,5 +37,10 @@ BUILD_STATUS=$(curl -s -X 'GET' \
   echo "Build Error  for ${IMAGE_NAME}"
   exit 1
  fi
+
+  if [ "$BUILD_STATUS" ==  '"SUCCESS"' ]; then
+  echo "Build was a $BUILD_STATUS for ${IMAGE_NAME}"
+  exit 0
+ fi
  sleep 10s
 done
