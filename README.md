@@ -1,6 +1,7 @@
 RHEL Edge Deployment 
 --------------------
 Rhel Edge deployment using https://console.redhat.com/edge/fleet-management.
+![20220608160403](https://i.imgur.com/45ww8t5.png)
 
 ## API Documentation
 https://console.redhat.com/#components-schemas-Device
