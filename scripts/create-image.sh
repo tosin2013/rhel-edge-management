@@ -1,5 +1,6 @@
 #!/bin/bash
-
+export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+set -x
 source authenticate-to-api.sh
 source rhel-edge-vars.sh
 
@@ -47,8 +48,11 @@ for p in  $(echo $PACKAGES); do
   echo '{"name": "'$p'"}' | tee -a  /tmp/packages.txt
 done
 IMAGE_PACKAGES=$(cat  /tmp/packages.txt  | jq --slurp .)
-echo ${IMAGE_PACKAGES}
-rm -rf /tmp/packages.txt
+echo ${IMAGE_PACKAGES} | sed "s/'//g"
+echo ${IMAGE_PACKAGES} | sed "s/'//g" >/tmp/packages_escaped.txt
+
+echo  '{"name":"'${IMAGE_NAME}'","version":0,"description":"'${DESCRIPTION}'","distribution":"'${DISTRIBUTION}'","imageType":"rhel-edge-installer","packages": '$(cat  /tmp/packages_escaped.txt)',"outputTypes":["rhel-edge-installer","rhel-edge-commit"],"commit":{"arch":"'${ARCH}'"},"installer":{"username":"'${USERNAME}'","sshkey": "'$(echo $SSH_KEY_INFO)'"}}' > /tmp/post_data.txt
+cat  /tmp/post_data.txt
 
 curl 'https://console.redhat.com/api/edge/v1/images' \
   -H 'authority: console.redhat.com' \
@@ -59,5 +63,8 @@ curl 'https://console.redhat.com/api/edge/v1/images' \
   -H 'content-type: application/json' \
   -H 'origin: https://console.redhat.com' \
   -H 'referer: https://console.redhat.com/beta/edge/manage-images?create_image=true' \
-  --data-raw '{"name":"'${IMAGE_NAME}'","version":0,"description":"'${DESCRIPTION}'","distribution":"'${DISTRIBUTION}'","imageType":"rhel-edge-installer","packages":'${IMAGE_PACKAGES}',"outputTypes":["rhel-edge-installer","rhel-edge-commit"],"commit":{"arch":"'${ARCH}'"},"installer":{"username":"'${USERNAME}'","sshkey":"'$(cat ${SSH_PUB_KEY_PATH}')"}}' \
+  -d @/tmp/post_data.txt \
   --compressed ;
+
+
+rm -rf /tmp/packages.txt /tmp/packages_escaped.txt /tmp/post_data.txt

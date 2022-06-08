@@ -22,6 +22,6 @@ echo "${IMAGE_NAME} IMAGE ID: $ID"
 
 echo "Get build status for ${IMAGE_NAME}"
 curl -s -X 'GET' \
-  'https://console.redhat.com/api/edge/v1/images/528/status' \
+  'https://console.redhat.com/api/edge/v1/images/'${ID}'/status' \
   -H 'accept: application/json' \
   -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.Status'
