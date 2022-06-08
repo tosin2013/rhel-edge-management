@@ -38,7 +38,7 @@ source rhel-edge-vars.sh && source authenticate-to-api.sh
 * `scripts/authenticate-to-api.sh` - authenticate to rhel console api 
 * `bash -x scripts/create-device-groups.sh` - Create device group on the redhat console website
 * `bash -x scripts/create-image.sh` - Create and build rhel image on redhat console.
-* `bash -x scripts/get-build-status.sh` -W Wait for build to complete
+* `bash -x scripts/get-build-status.sh` - Wait for build to complete
 * `bash -x scripts/download-iso.sh` - Download ISO from redhat console
 
 ## Links
