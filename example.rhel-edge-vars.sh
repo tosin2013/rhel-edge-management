@@ -19,6 +19,11 @@ export PACKAGES="curl net-tools podman vim tar bind-utils git"
 export ARCH="x86_64"
 
 #########################################################
+## automated management variables
+export RHC_ORG_ID="YOUR_RHC_ORG_ID"
+export RHC_ACTIVATION_KEY="YOUR_RHC_ACTIVATION_KEY"
+
+#########################################################
 ## Optional variables
 ## osinfo-query os
 export OS_VARIANT="rhel8.5"

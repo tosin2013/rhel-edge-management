@@ -40,6 +40,7 @@ source rhel-edge-vars.sh && source authenticate-to-api.sh
 * `bash -x scripts/create-image.sh` - Create and build rhel image on redhat console.
 * `bash -x scripts/get-build-status.sh` - Wait for build to complete
 * `bash -x scripts/download-iso.sh` - Download ISO from redhat console
+* `bash -x scripts/automatic_registration.sh` - Auto register vms so they will populate on https://console.redhat.com/insights/inventory/
 
 ## Links
 * [Create RHEL for Edge images and configure automated management](https://access.redhat.com/documentation/en-us/edge_management/2022/html-single/create_rhel_for_edge_images_and_configure_automated_management/index#doc-wrapper)
