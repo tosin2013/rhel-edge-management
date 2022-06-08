@@ -1,6 +1,7 @@
 #!/bin/bash
 source authenticate-to-api.sh
 source rhel-edge-vars.sh
+set -x 
 
 if [ -z "$ACTIVE_TOKEN" ]; then
   echo "No active token found. Please run authenticate-to-api.sh first."
@@ -39,10 +40,10 @@ BUILD_STATUS=$(curl -s -X 'GET' \
  fi
 
   if [ "$BUILD_STATUS" ==  '"SUCCESS"' ]; then
-    echo "Build was a $BUILD_STATUS for ${IMAGE_NAME}"
+    echo "Build was a $BUILD_STATUS for ${IMAGE_NAME}"y
     exit 0
   fi
-  
+
   if [ -z "$BUILD_STATUS" ]; then
     source authenticate-to-api.sh
   fi
