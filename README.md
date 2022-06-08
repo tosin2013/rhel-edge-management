@@ -36,9 +36,9 @@ vim rhel-edge-vars.sh
 
 source rhel-edge-vars.sh && source authenticate-to-api.sh
 * `scripts/authenticate-to-api.sh` - authenticate to rhel console api 
-* `scripts/create-device-groups.sh` - Create device group on the redhat console website
-* `scripts/create-image.sh` - Create and build rhel image on redhat console.
-* `scripts/download-iso.sh` - Download ISO from redhat console
+* `bash -x scripts/create-device-groups.sh` - Create device group on the redhat console website
+* `bash -x scripts/create-image.sh` - Create and build rhel image on redhat console.
+* `bash -x scripts/download-iso.sh` - Download ISO from redhat console
 
 ## Links
 * [Create RHEL for Edge images and configure automated management](https://access.redhat.com/documentation/en-us/edge_management/2022/html-single/create_rhel_for_edge_images_and_configure_automated_management/index#doc-wrapper)
