@@ -12,6 +12,7 @@ fi
 
 if [ $CREATE_IMAGE_NAME == true ]; then 
  ./scripts/create-image.sh
+ ./scripts/get-build-status.sh || exit $?
 fi
 
 ./scripts/download-iso.sh

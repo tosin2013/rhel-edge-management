@@ -1,6 +1,5 @@
 #!/bin/bash
-export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
-set -x
+
 source authenticate-to-api.sh
 source rhel-edge-vars.sh
 

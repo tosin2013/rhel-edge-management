@@ -21,7 +21,21 @@ ID=$(curl -s -X 'GET' \
 echo "${IMAGE_NAME} IMAGE ID: $ID"
 
 echo "Get build status for ${IMAGE_NAME}"
-curl -s -X 'GET' \
+BUILD_STATUS=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/edge/v1/images/'${ID}'/status' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.Status'
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.Status')
+
+echo $BUILD_STATUS
+while [ "$BUILD_STATUS" != '"Ready"' ]; do
+BUILD_STATUS=$(curl -s -X 'GET' \
+  'https://console.redhat.com/api/edge/v1/images/'${ID}'/status' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.Status')
+
+ if [ "$BUILD_STATUS" ==  '"ERROR"' ]; then
+  echo "Build Error  for ${IMAGE_NAME}"
+  exit 1
+ fi
+ sleep 10s
+done
