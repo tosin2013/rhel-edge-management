@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #########################################################
-## Check for required rhel-edge-vars.sh file
+## use with the RHEL EDGE Management Ansible role
+## Found:  https://github.com/tosin2013/rhel-edge-mangement-role
 if [ $# -ne 3 ]; then
   echo -e "Usage: $0 <image_name> <dev_vm_name> <os_variant>\n"
   exit 1
@@ -17,6 +18,8 @@ LIBVIRT_VM_PATH="/var/lib/libvirt/images"
 IMAGE_NAME=${1}
 DEV_VM_NAME=${2}
 OS_VARIANT=${3}
+# uncomment POWEROFF if RHEL 8.5 or less
+# POWEROFF=",on_poweroff=preserve"
 if [ ! -f /opt/generated_iso/$IMAGE_NAME.iso ];
 then
   echo -e "  ISO for ${IMAGE_NAME} not found on host at /opt/generated_iso/${IMAGE_NAME}.iso ..."
@@ -47,7 +50,7 @@ do
   fi
 done
 
-LIBVIRT_LIKE_OPTIONS="--connect=qemu:///system -v --memballoon none --cpu host-passthrough --autostart --noautoconsole --virt-type kvm --features kvm_hidden=on --controller type=scsi,model=virtio-scsi --cdrom=${LIBVIRT_VM_PATH}/$IMAGE_NAME.iso  --os-variant=${OS_VARIANT} --events on_reboot=restart,on_poweroff=preserve --graphics vnc,listen=0.0.0.0,tlsport=,defaultMode='insecure' --network ${LIBVIRT_NETWORK}  --console pty,target_type=serial"
+LIBVIRT_LIKE_OPTIONS="--connect=qemu:///system -v --memballoon none --cpu host-passthrough --autostart --noautoconsole --virt-type kvm --features kvm_hidden=on --controller type=scsi,model=virtio-scsi --cdrom=${LIBVIRT_VM_PATH}/$IMAGE_NAME.iso  --os-variant=${OS_VARIANT} --events on_reboot=restart${POWEROFF} --graphics vnc,listen=0.0.0.0,tlsport=,defaultMode='insecure' --network ${LIBVIRT_NETWORK}  --console pty,target_type=serial"
 MAC_ADDRESS=$(date +%s | md5sum | head -c 6 | sed -e 's/\([0-9A-Fa-f]\{2\}\)/\1:/g' -e 's/\(.*\):$/\1/' | sed -e 's/^/52:54:00:/')
 
 #########################################################

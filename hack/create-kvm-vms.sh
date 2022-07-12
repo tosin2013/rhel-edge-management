@@ -14,6 +14,8 @@ CP_RAM_GB="2"
 CP_CPU_SOCKETS="1"
 DISK_SIZE="40"
 LIBVIRT_VM_PATH="/var/lib/libvirt/images"
+# uncomment POWEROFF if RHEL 8.5 or less
+# POWEROFF=",on_poweroff=preserve"
 if [ ! -f ${LIBVIRT_VM_PATH}/$IMAGE_NAME.iso ];
 then 
   sudo cp $IMAGE_NAME.iso  ${LIBVIRT_VM_PATH}/$IMAGE_NAME.iso 
@@ -38,7 +40,7 @@ do
   fi
 done
 
-LIBVIRT_LIKE_OPTIONS="--connect=qemu:///system -v --memballoon none --cpu host-passthrough --autostart --noautoconsole --virt-type kvm --features kvm_hidden=on --controller type=scsi,model=virtio-scsi --cdrom=${LIBVIRT_VM_PATH}/$IMAGE_NAME.iso  --os-variant=${OS_VARIANT} --events on_reboot=restart,on_poweroff=preserve --graphics vnc,listen=0.0.0.0,tlsport=,defaultMode='insecure' --network ${LIBVIRT_NETWORK}  --console pty,target_type=serial"
+LIBVIRT_LIKE_OPTIONS="--connect=qemu:///system -v --memballoon none --cpu host-passthrough --autostart --noautoconsole --virt-type kvm --features kvm_hidden=on --controller type=scsi,model=virtio-scsi --cdrom=${LIBVIRT_VM_PATH}/$IMAGE_NAME.iso  --os-variant=${OS_VARIANT} --events on_reboot=restart${POWEROFF} --graphics vnc,listen=0.0.0.0,tlsport=,defaultMode='insecure' --network ${LIBVIRT_NETWORK}  --console pty,target_type=serial"
 MAC_ADDRESS=$(date +%s | md5sum | head -c 6 | sed -e 's/\([0-9A-Fa-f]\{2\}\)/\1:/g' -e 's/\(.*\):$/\1/' | sed -e 's/^/52:54:00:/')
 
 #########################################################
