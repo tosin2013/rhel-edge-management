@@ -31,6 +31,7 @@ export DEV_VM_NAME="test-dev-vm"
 
 #########################################################
 ## Current Kickstart Variables
+# https://github.com/RedHatInsights/edge-api/blob/main/templates/templateKickstart.ks
 export ENABLE_KICKSTART=true
 export DEFAULT_KICKSTART_URL="https://raw.githubusercontent.com/Red-Hat-SE-RTO/rhel-fleet-management/main/inventories/lab/applications/quarkuscoffeeshop-majestic-monolith-fleet-manger/fleet.kspost"
 export RHEL_USERNAME="admin@example.com"
