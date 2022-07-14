@@ -4,11 +4,6 @@ Rhel Edge deployment using https://console.redhat.com/edge/fleet-management.
 ![20220608160403](https://i.imgur.com/45ww8t5.png)
 
 ## API Documentation
-<<<<<<< HEAD
-https://console.redhat.com/#components-schem
-
-## Development 
-=======
 https://console.redhat.com/docs/api/edge
 
 
@@ -46,4 +41,3 @@ vim rhel-edge-vars.sh
 ## Links
 * [Create RHEL for Edge images and configure automated management](https://access.redhat.com/documentation/en-us/edge_management/2022/html-single/create_rhel_for_edge_images_and_configure_automated_management/index#doc-wrapper)
 * [Working with systems in the edge management application](https://access.redhat.com/documentation/en-us/edge_management/2022/html-single/working_with_systems_in_the_edge_management_application/index)
->>>>>>> e400024ed2510a09c4d0766a3ed16ad34e195779
