@@ -1,5 +1,59 @@
 #!/bin/bash
 
+source authenticate-to-api.sh
+source rhel-edge-vars.sh
+
+if [ -z "$ACTIVE_TOKEN" ]; then
+  echo "No active token found. Please run authenticate-to-api.sh first."
+  exit 1
+fi
+
+if [ -z "$IMAGE_NAME" ]; then
+  echo "No image name found. Please set IMAGE_NAME in rhel-edge-vars.sh"
+  exit 1
+fi
+
+if [ -z $PACKAGES ]; then
+  echo "No packages found. Please set PACKAGES in rhel-edge-vars.sh"
+  exit 1
+fi
+
+if [ -z $DESCRIPTION ]; then
+  echo "No description found. Please set DESCRIPTION in rhel-edge-vars.sh"
+  exit 1
+fi
+
+if [ -z $DISTRIBUTION ]; then
+  echo "No distribution found. Please set DISTRIBUTION in rhel-edge-vars.sh"
+  exit 1
+fi
+
+if [  -z $ARCH ]; then
+  echo "No arch found. Please set ARCH in rhel-edge-vars.sh"
+  exit 1
+fi
+
+if [ -z $USERNAME ]; then
+  echo "No username found. Please set USERNAME in rhel-edge-vars.sh"
+  exit 1
+fi
+
+if [ -z $SSH_PUB_KEY_PATH ]; then
+  echo "No ssh pub key path found. Please set SSH_PUB_KEY_PATH in rhel-edge-vars.sh"
+  exit 1
+fi
+
+for p in  $(echo $PACKAGES); do
+  echo '{"name": "'$p'"}' | tee -a  /tmp/packages.txt
+done
+IMAGE_PACKAGES=$(cat  /tmp/packages.txt  | jq --slurp .)
+echo ${IMAGE_PACKAGES} | sed "s/'//g"
+echo ${IMAGE_PACKAGES} | sed "s/'//g" >/tmp/packages_escaped.txt
+export SSH_KEY_INFO=$(cat $SSH_PUB_KEY_PATH)
+
+echo  '{"name":"'${IMAGE_NAME}'","version":0,"description":"'${DESCRIPTION}'","distribution":"'${DISTRIBUTION}'","imageType":"rhel-edge-installer","packages": '$(cat  /tmp/packages_escaped.txt)',"outputTypes":["rhel-edge-installer","rhel-edge-commit"],"commit":{"arch":"'${ARCH}'"},"installer":{"username":"'${USERNAME}'","sshkey": "'$(echo $SSH_KEY_INFO)'","thirdPartyRepositories":[]}}' > /tmp/post_data.txt
+cat  /tmp/post_data.txt
+
 curl 'https://console.redhat.com/api/edge/v1/images' \
   -H 'authority: console.redhat.com' \
   -H 'accept: application/json, text/plain, */*' \
@@ -9,5 +63,8 @@ curl 'https://console.redhat.com/api/edge/v1/images' \
   -H 'content-type: application/json' \
   -H 'origin: https://console.redhat.com' \
   -H 'referer: https://console.redhat.com/beta/edge/manage-images?create_image=true' \
-  --data-raw '{"name":"testing-one-two","version":0,"description":"sample description","distribution":"rhel-85","imageType":"rhel-edge-installer","packages":[{"name":"curl"},{"name":"net-tools"},{"name":"podman"},{"name":"wget"}],"outputTypes":["rhel-edge-installer","rhel-edge-commit"],"commit":{"arch":"x86_64"},"installer":{"username":"tosin","sshkey":"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCzDoM4Pg/80xxgeEAoPdZZDrAEbbB3Fueo+BVAoBpPYhBt4+cR9mIe6KFqFBH/BUOoQ6kMBxjTILX18tVlw0VGS/BYx0oRoR+Tji1DK+EN0nthM8QgDXJy2UNGfZpkM5Wo6z2qWo96fvzaTI2MZ7QmEnb61yA5ZsyAwux1w5zSLO+O9l+ftL8jglwI1YG2ukoNxX5sHmm1zGkKhFshSSi00azzu1dCxGDUBI8IjVyMbRRsXat/eKZc1zH1pbMJzqh8RjCzG6j9xcfhSP/R9cD1H82JswGNnZu26VyZprUG5Qu7GhL4AU2U59oluJsx5lNWDxQvWmQpfY0PobO0OWTKezfiZCkNYH6Rt19UODjm2beGqJT5lQ9m8D4envmTUIj+fUUQjT6KCw5ONTUvXaate5F4uT7BnwXENOhZhaOFgIOGcBpNV0jfMkjHqlLBFO4sTlEc2pfZa3OPrxiqAwFfJsE1OSAJkP09t9M73fMfsUlAfV2csfOziOIUldf9/p0okJ9Rkptl9oU+CQeyKmHj8tRQmDOEG2KMrAo9Iey0TYnxhomV3kRqEiOeOk0LiR0DT6WcTQLiloH4ipIiG+DKc3ZOXYIqEUfCz33kaa8zbMjBECeXatshjofpF3I/CZl+k+F0KNmaFM4nxfextNr3/oVmXPa5n7OgvnM4uYObaQ== takinosh@redhat.com\n"}}' \
+  -d @/tmp/post_data.txt \
   --compressed ;
+
+
+rm -rf /tmp/packages.txt /tmp/packages_escaped.txt /tmp/post_data.txt
