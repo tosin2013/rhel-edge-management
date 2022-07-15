@@ -24,8 +24,8 @@ EOF
 if [ ${ENABLE_KICKSTART} == ture ];
 then 
   curl -OL ${DEFAULT_KICKSTART_URL}
-  sed "s/yourinfo/${RHEL_USERNAME}/g" -i fleet.kspost
-  sed "s/yourinfo/${RHEL_PASSWORD}/g" -i fleet.kspost  
+  sed "s/your_username/${RHEL_USERNAME}/g" -i fleet.kspost
+  sed "s/your_password/${RHEL_PASSWORD}/g" -i fleet.kspost  
 fi
 
 curl -OL ${DEFAULT_KICKSTART_URL}
