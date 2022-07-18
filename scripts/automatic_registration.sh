@@ -22,18 +22,21 @@ RHC_ORGID=${RHC_ORG_ID}
 RHC_ACTIVATION_KEY=${RHC_ACTIVATION_KEY}
 EOF
 
-if [ ${ENABLE_KICKSTART} == ture ];
+if [ ${ENABLE_KICKSTART} == true ];
 then 
   curl -OL ${DEFAULT_KICKSTART_URL}
   sed "s/your_username/${RHEL_USERNAME}/g" -i fleet.kspost
   sed "s/your_password/${RHEL_PASSWORD}/g" -i fleet.kspost  
+  sed "s/CHANGE_HOSTNAME/${DEV_VM_NAME}/g" -i fleet.kspost  
+  sed "s/CHANGE_USERNAME/${CHANGE_USERNAME}/g" -i fleet.kspost
+  sed "s/CHANGE_SSH/$(cat ${SSH_PUB_KEY_PATH})/g" -i fleet.kspost
 fi
 
 curl -OL ${DEFAULT_KICKSTART_URL}
 mv fleet.kspost template.ks
 
 podman pull quay.io/fleet-management/fleet-iso-util:latest
-chmod 777 -R ${IMAGE_NAME}_dir/
+chmod 777 -R ../${IMAGE_NAME}_dir/
 if [ ${ENABLE_KICKSTART} == true ];
 then 
   podman run -it --rm -v $(pwd):/isodir:Z quay.io/fleet-management/fleet-iso-util:latest  /usr/local/bin/fleetkick.sh -k template.ks
