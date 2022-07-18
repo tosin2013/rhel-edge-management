@@ -27,7 +27,7 @@ then
   curl -OL ${DEFAULT_KICKSTART_URL}
   sed "s/your_username/${RHEL_USERNAME}/g" -i fleet.kspost
   sed "s/your_password/${RHEL_PASSWORD}/g" -i fleet.kspost  
-  sed "s/CHANGE_HOSTNAME/${DEV_VM_NAME}/g" -i fleet.kspost  
+  sed "s/CHANGE_HOSTNAME/${USERNAME}/g" -i fleet.kspost  
   sed "s/CHANGE_USERNAME/${CHANGE_USERNAME}/g" -i fleet.kspost
   sed "s/CHANGE_SSH/$(cat ${SSH_PUB_KEY_PATH})/g" -i fleet.kspost
 fi
