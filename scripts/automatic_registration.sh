@@ -27,13 +27,15 @@ then
   curl -OL ${DEFAULT_KICKSTART_URL}
   sed "s/your_username/${RHEL_USERNAME}/g" -i fleet.kspost
   sed "s/your_password/${RHEL_PASSWORD}/g" -i fleet.kspost  
-  sed "s/CHANGE_HOSTNAME/${USERNAME}/g" -i fleet.kspost  
-  sed "s/CHANGE_USERNAME/${CHANGE_USERNAME}/g" -i fleet.kspost
+  sed "s/CHANGE_HOSTNAME/${DEV_VM_NAME}/g" -i fleet.kspost  
+  sed "s/CHANGE_USERNAME/$USERNAME/g" -i fleet.kspost
   sed "s/CHANGE_SSH/$(cat ${SSH_PUB_KEY_PATH})/g" -i fleet.kspost
+  mv fleet.kspost template.ks
+  cat template.ks
+  sleep 10s
 fi
 
-curl -OL ${DEFAULT_KICKSTART_URL}
-mv fleet.kspost template.ks
+
 
 podman pull quay.io/fleet-management/fleet-iso-util:latest
 chmod 777 -R ../${IMAGE_NAME}_dir/
@@ -45,4 +47,4 @@ else
 fi 
 
 cp fleet_out.iso ../${IMAGE_NAME}_fleet_out.iso
-rm fleet.kspost fleet_rhc_vars fleet_out.iso
+rm fleet_rhc_vars fleet_out.iso
