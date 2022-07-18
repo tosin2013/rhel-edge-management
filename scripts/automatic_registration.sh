@@ -13,6 +13,7 @@ if [ ! -f ${IMAGE_NAME}.iso ]; then
 fi
 
 mkdir  ${IMAGE_NAME}_dir
+
 cd  ${IMAGE_NAME}_dir
 cp ../$IMAGE_NAME.iso fleet_source.iso
 
@@ -32,6 +33,7 @@ curl -OL ${DEFAULT_KICKSTART_URL}
 mv fleet.kspost template.ks
 
 podman pull quay.io/fleet-management/fleet-iso-util:latest
+chmod 777 -R ${IMAGE_NAME}_dir/
 if [ ${ENABLE_KICKSTART} == true ];
 then 
   podman run -it --rm -v $(pwd):/isodir:Z quay.io/fleet-management/fleet-iso-util:latest  /usr/local/bin/fleetkick.sh -k template.ks
