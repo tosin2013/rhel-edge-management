@@ -25,17 +25,19 @@ EOF
 if [ ${ENABLE_KICKSTART} == true ];
 then 
   curl -OL ${DEFAULT_KICKSTART_URL}
-  sed "s/your_username/${RHEL_USERNAME}/g" -i fleet.kspost
-  sed "s/your_password/${RHEL_PASSWORD}/g" -i fleet.kspost  
+  sed "s/rhel_username/${RHEL_USERNAME}/g" -i fleet.kspost
+  sed "s/rhel_password/${RHEL_PASSWORD}/g" -i fleet.kspost  
   sed "s/CHANGE_HOSTNAME/${DEV_VM_NAME}/g" -i fleet.kspost  
   sed "s/CHANGE_USERNAME/$USERNAME/g" -i fleet.kspost
-  sed "s/CHANGE_SSH/$(cat ${SSH_PUB_KEY_PATH})/g" -i fleet.kspost
+  sed "s|CHANGE_SSH|$(cat ${SSH_PUB_KEY_PATH})|g" -i fleet.kspost
   mv fleet.kspost template.ks
+  echo "Kickstart file template.ks created"
+  echo "#############################################################################"
   cat template.ks
+  echo "Kickstart file template.ks contents"
+  echo "#############################################################################"
   sleep 10s
 fi
-
-
 
 podman pull quay.io/fleet-management/fleet-iso-util:latest
 chmod 777 -R ../${IMAGE_NAME}_dir/
