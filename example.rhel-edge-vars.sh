@@ -13,7 +13,7 @@ export DEVICE_GROUP_NAME="my-device-name-group"
 ## Image Atrributes
 export IMAGE_NAME="test-image"
 export USERNAME="admin"
-export DISTRIBUTION="rhel-85"
+export DISTRIBUTION="rhel-86"
 export DESCRIPTION="sample description"
 export PACKAGES="curl net-tools podman tar bind-utils git"
 export ARCH="x86_64"
@@ -26,8 +26,8 @@ export RHC_ACTIVATION_KEY="YOUR_RHC_ACTIVATION_KEY"
 #########################################################
 ## Optional variables
 ## osinfo-query os
-export OS_VARIANT="rhel8.5"
-export DEV_VM_NAME="test-dev-vm"
+export OS_VARIANT="rhel8.6"
+export DEV_VM_NAME="test-dev-vm-$(tr -dc a-z </dev/urandom|head -c 6)"
 
 #########################################################
 ## Current Kickstart Variables
