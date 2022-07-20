@@ -48,5 +48,5 @@ else
   podman run -it --rm -v $(pwd):/isodir:Z quay.io/fleet-management/fleet-iso-util:latest
 fi 
 
-cp fleet_out.iso ../${IMAGE_NAME}_fleet_out.iso
+cp fleet_out.iso ../${IMAGE_NAME}_${DEV_VM_NAME}.iso
 rm fleet_rhc_vars fleet_out.iso
