@@ -18,6 +18,20 @@ INSTALLER_ID=$(curl -s -X 'GET' \
   -H 'accept: application/json' \
   -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.Name=="'${IMAGE_NAME}'") | .InstallerID')
 
+for i in 1 2 3 4 5
+do
+   echo "Welcome $i times"
+  INSTALLER_ID=$(curl -s -X 'GET' \
+  'https://console.redhat.com/api/edge/v1/images' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data['$i']| select(.Name=="'${IMAGE_NAME}'") | .ID')
+  if [ ! -z ${INSTALLER_ID} ];
+  then 
+    NEW_ITEM=$i
+    break
+  fi
+done
+
 if [ -z ${INSTALLER_ID} ];
 then 
   echo "INSTALLER ID is empty"
@@ -28,7 +42,7 @@ echo "INSTALLER_ID is ${INSTALLER_ID}"
 STATUS=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/edge/v1/images' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.Name=="'${IMAGE_NAME}'") |select(.InstallerID=='${INSTALLER_ID}') |.Status'  | tr -d '"')
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data['${NEW_ITEM}']| select(.Name=="'${IMAGE_NAME}'") |select(.InstallerID=='${INSTALLER_ID}') |.Status'  | tr -d '"')
 
 if [ "${STATUS}" != "SUCCESS" ];
 then 
@@ -40,7 +54,7 @@ echo "INSTALLER_ID is ${INSTALLER_ID}"
 STATUS=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/edge/v1/images' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.Name=="'${IMAGE_NAME}'") |select(.InstallerID=='${INSTALLER_ID}') |.Installer.Status'  | tr -d '"')
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data['${NEW_ITEM}']| select(.Name=="'${IMAGE_NAME}'") |select(.InstallerID=='${INSTALLER_ID}') |.Installer.Status'  | tr -d '"')
 
 if [ "${STATUS}" != "SUCCESS" ];
 then 
@@ -48,18 +62,7 @@ then
   exit 1
 fi 
 
-
-echo "Get IMAGE_BUILD_ISO_URL"
-IMAGE_BUILD_ISO_URL=$(curl -s -X 'GET' \
-  'https://console.redhat.com/api/edge/v1/images' \
+curl --location --request GET  \
+  'https://console.redhat.com/api/edge/v1/storage/isos/'${INSTALLER_ID} \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.Name=="'${IMAGE_NAME}'") |select(.InstallerID=='${INSTALLER_ID}') | .Installer.ImageBuildISOURL'  | tr -d '"')
-
-if [ -z ${IMAGE_BUILD_ISO_URL} ];
-then 
-  echo "IMAGE_BUILD_ISO_URL is empty"
-  exit 1
-fi 
-
-echo "ImageBuildISOURL: ${IMAGE_BUILD_ISO_URL}"
-curl -OL $IMAGE_BUILD_ISO_URL
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' --output ${IMAGE_NAME}.iso

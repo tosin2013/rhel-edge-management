@@ -19,6 +19,20 @@ ID=$(curl -s -X 'GET' \
   -H 'accept: application/json' \
   -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.Name=="'${IMAGE_NAME}'") | .ID')
 
+
+for i in 1 2 3 4 5
+do
+   echo "Welcome $i times"
+  ID=$(curl -s -X 'GET' \
+  'https://console.redhat.com/api/edge/v1/images' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data['$i']| select(.Name=="'${IMAGE_NAME}'") | .ID')
+  if [ ! -z ${ID} ];
+  then 
+    break
+  fi
+done
+
 echo "${IMAGE_NAME} IMAGE ID: $ID"
 
 echo "Get build status for ${IMAGE_NAME}"
