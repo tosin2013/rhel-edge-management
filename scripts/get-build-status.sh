@@ -22,7 +22,7 @@ ID=$(curl -s -X 'GET' \
 
 for i in 1 2 3 4 5
 do
-   echo "Welcome $i times"
+   echo "Checking iso $i "
   ID=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/edge/v1/images' \
   -H 'accept: application/json' \
