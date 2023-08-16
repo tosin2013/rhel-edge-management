@@ -38,6 +38,8 @@ TARGET ENDPOINT: https://console.redhat.com/insights/image-builder`
 * `source image-builder-vars.sh && source authenticate-to-api.sh`
 * `scripts/create-image-builder.sh` - Create image via image builder
 * `scripts/get-image-builder-status.sh` - Get image builder status
+* `scripts/download-image-builder-binary.sh` - Download image builder image
+
 
 ### To delete a image-builder image use the following
 ```bash
