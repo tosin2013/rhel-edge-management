@@ -39,6 +39,11 @@ TARGET ENDPOINT: https://console.redhat.com/insights/image-builder`
 * `scripts/create-image-builder.sh` - Create image via image builder
 * `scripts/get-image-builder-status.sh` - Get image builder status
 
+### To delete a image-builder image use the following
+```bash
+$ scripts/delete-image-builder.sh a69a269a-0dbd-4dfb-84a0-8426a205baef
+```
+
 ## Running bootstrap install manually  
 > The bootstrap install script calls the scripts below in order. If you would like to walk thru the script call the scripts below.
 TARGET ENDPOINT: https://console.redhat.com/edge/inventory
