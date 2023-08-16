@@ -50,9 +50,9 @@ while [ "$BUILD_STATUS" != '"Ready"' ]; do
 BUILD_STATUS=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/image-builder/v1/composes/'${ID}'' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.image_status.status)
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.image_status.status')
 
- if [ "$BUILD_STATUS" ==  '"ERROR"' ]; then
+ if [ "$BUILD_STATUS" ==  '"error"' ]; then
   echo "Build Error  for ${IMAGE_NAME}"
   exit 1
  fi
