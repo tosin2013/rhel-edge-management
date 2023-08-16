@@ -17,7 +17,7 @@ echo "Getting Status for ${IMAGE_NAME}"
 ID=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/image-builder/v1/composes' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.image_name=="'${IMAGE_NAME}'") | .ID')
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.image_name=="'${IMAGE_NAME}'") | .id')
 
 
 for i in 1 2 3 4 5
@@ -26,7 +26,7 @@ do
   ID=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/image-builder/v1/composes' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data['$i']| select(.image_name=="'${IMAGE_NAME}'") | .ID')
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data['$i']| select(.image_name=="'${IMAGE_NAME}'") | .id')
   if [ ! -z ${ID} ];
   then 
     break
