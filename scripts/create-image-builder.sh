@@ -41,7 +41,7 @@ fi
 if [ ${TEMPLATE_NAME} == "demo-request" ];
 then
   # Update the JSON using jq
-  updated_json=$(echo "tempaltes/demo-request.json" | jq --arg image_name "$IMAGE_NAME" --arg distribution "$DISTRIBUTION" \
+  updated_json=$(echo "templates/demo-request.json" | jq --arg image_name "$IMAGE_NAME" --arg distribution "$DISTRIBUTION" \
   '.image_name = $image_name | .distribution = $distribution')
 
   # Print the updated JSON
@@ -49,7 +49,7 @@ then
 elif [ ${TEMPLATE_NAME} == "iso-qcow-request" ];
 then 
     cp iso-qcow-request.json 
-    updated_json=$(echo  "tempaltes/iso-qcow-request.json" | jq --arg image_name "$IMAGE_NAME" \
+    updated_json=$(echo  "templates/iso-qcow-request.json" | jq --arg image_name "$IMAGE_NAME" \
     --arg distribution "$DISTRIBUTION" \
     --arg activation_key "$new_activation_key" \
     --argjson organization "$RHC_ORG_ID" \
