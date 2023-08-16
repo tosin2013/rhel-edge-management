@@ -1,6 +1,6 @@
 #!/bin/bash
 source authenticate-to-api.sh
-source rhel-edge-vars.sh
+source image-builder-vars.sh
 set -x 
 
 if [ -z "$ACTIVE_TOKEN" ]; then
@@ -9,7 +9,7 @@ if [ -z "$ACTIVE_TOKEN" ]; then
 fi
 
 if [ -z "$IMAGE_NAME" ]; then
-  echo "No image name found. Please set IMAGE_NAME in rhel-edge-vars.sh"
+  echo "No image name found. Please set IMAGE_NAME in image-builder-vars.sh"
   exit 1
 fi   
 

@@ -33,11 +33,16 @@ cp example.image-builder-vars.sh image-builder-vars.sh
 vim image-builder-vars.sh
 ```
 
+## Running image-builder install manually
+TARGET ENDPOINT: https://console.redhat.com/insights/image-builder`
+* `source image-builder-vars.sh && source authenticate-to-api.sh`
+* `scripts/create-image-builder.sh` - Create image via image builder
+* `scripts/get-image-builder-status.sh` - Get image builder status
+
 ## Running bootstrap install manually  
 > The bootstrap install script calls the scripts below in order. If you would like to walk thru the script call the scripts below.
-
+TARGET ENDPOINT: https://console.redhat.com/edge/inventory
 * `source rhel-edge-vars.sh && source authenticate-to-api.sh`
-* `source image-builder-vars.sh && source authenticate-to-api.sh`
 * `scripts/authenticate-to-api.sh` - authenticate to rhel console api 
 * `bash -x scripts/create-device-groups.sh` - Create device group on the redhat console website
 * `bash -x scripts/create-image.sh` - Create and build rhel image on redhat console.
