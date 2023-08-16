@@ -1,0 +1,14 @@
+{
+    "image_name": "demo-image",
+    "distribution": "rhel-92",
+    "image_requests": [
+      {
+        "architecture": "x86_64",
+        "image_type": "guest-image",
+        "upload_request": {
+          "type": "aws.s3",
+          "options": {}
+        }
+      }
+    ]
+  }

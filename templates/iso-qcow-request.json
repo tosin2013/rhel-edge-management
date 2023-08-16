@@ -1,0 +1,32 @@
+{
+    "distribution": "rhel-92",
+    "image_name": "cool-running",
+    "image_requests": [
+      {
+        "architecture": "x86_64",
+        "image_type": "guest-image",
+        "upload_request": {
+          "type": "aws.s3",
+          "options": {}
+        }
+      }
+    ],
+    "customizations": {
+      "packages": [
+        "curl",
+        "podman",
+        "net-tools",
+        "tar",
+        "bind-utils",
+        "git"
+      ],
+      "subscription": {
+        "activation-key": "activationkey",
+        "insights": true,
+        "rhc": true,
+        "organization": 123456789,
+        "server-url": "subscription.rhsm.redhat.com",
+        "base-url": "https://cdn.redhat.com/"
+      }
+    }
+  }
