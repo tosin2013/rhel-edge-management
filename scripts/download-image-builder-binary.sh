@@ -50,4 +50,5 @@ DOWNLOAD_URL=$(curl -s -X 'GET' \
 
 
 # Download the URL
-curl -sL $DOWNLOAD_URL > "${IMAGE_NAME}.qcow2"
+NEW_DOWNLOAD_URL=$(echo $DOWNLOAD_URL | sed 's/\"//g')
+curl -sL $NEW_DOWNLOAD_URL > "${IMAGE_NAME}.qcow2"
