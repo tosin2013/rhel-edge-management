@@ -41,18 +41,18 @@ fi
 if [ ${TEMPLATE_NAME} == "demo-request" ];
 then
   # Update the JSON using jq
-  updated_json=$(echo "templates/demo-request.json" | jq --arg image_name "$IMAGE_NAME" --arg distribution "$DISTRIBUTION" \
+  updated_json=$(cat "templates/demo-request.json" | jq --arg image_name "$IMAGE_NAME" --arg distribution "$DISTRIBUTION" \
   '.image_name = $image_name | .distribution = $distribution')
 
   # Print the updated JSON
   echo "$updated_json" > request.json
 elif [ ${TEMPLATE_NAME} == "iso-qcow-request" ];
 then 
-    updated_json=$(echo  "templates/iso-qcow-request.json" | jq --arg image_name "$IMAGE_NAME" \
+    updated_json=$(cat  "templates/iso-qcow-request.json" | jq --arg image_name "$IMAGE_NAME" \
     --arg distribution "$DISTRIBUTION" \
-    --arg activation_key "$RHC_ACTIVATION_KEY" \
-    --arg organization "$RHC_ORG_ID" \
-    --arg packages "$PACKAGES" \
+    --arg activation_key $RHC_ACTIVATION_KEY \
+    --argjson organization $RHC_ORG_ID \
+    --argjson packages "$PACKAGES" \
     '.image_name = $image_name | 
     .distribution = $distribution | 
     .customizations.subscription["activation-key"] = $activation_key | 

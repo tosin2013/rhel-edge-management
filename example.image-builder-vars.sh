@@ -19,7 +19,7 @@ export ARCH="x86_64"
 
 #########################################################
 ## automated management variables
-export RHC_ORG_ID="YOUR_RHC_ORG_ID"
+export RHC_ORG_ID="12345678"
 export RHC_ACTIVATION_KEY="YOUR_RHC_ACTIVATION_KEY"
 
 #########################################################
