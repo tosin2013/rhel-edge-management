@@ -48,7 +48,6 @@ then
   echo "$updated_json" > request.json
 elif [ ${TEMPLATE_NAME} == "iso-qcow-request" ];
 then 
-    cp iso-qcow-request.json 
     updated_json=$(echo  "templates/iso-qcow-request.json" | jq --arg image_name "$IMAGE_NAME" \
     --arg distribution "$DISTRIBUTION" \
     --arg activation_key "$RHC_ACTIVATION_KEY" \
