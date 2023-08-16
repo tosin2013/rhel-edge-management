@@ -51,7 +51,7 @@ then
     cp iso-qcow-request.json 
     updated_json=$(echo  "templates/iso-qcow-request.json" | jq --arg image_name "$IMAGE_NAME" \
     --arg distribution "$DISTRIBUTION" \
-    --arg activation_key "$new_activation_key" \
+    --arg activation_key "$RHC_ACTIVATION_KEY" \
     --argjson organization "$RHC_ORG_ID" \
     --argjson packages "$PACKAGES" \
     '.image_name = $image_name | 
