@@ -38,23 +38,34 @@ if [ -z $SSH_PUB_KEY_PATH ]; then
   exit 1
 fi
 
-cat >request.json <<END
-{
-  "image_name": "${IMAGE_NAME}",
-  "distribution": "${DISTRIBUTION}",
-  "image_requests": [
-    {
-      "architecture": "x86_64",
-      "image_type": "guest-image",
-      "upload_request": {
-        "type": "aws.s3",
-        "options": {}
-      }
-    }
-  ]
-}
-END
+if [ ${TEMPLATE_NAME} == "demo-request" ];
+then
+  # Update the JSON using jq
+  updated_json=$(echo "tempaltes/demo-request.json" | jq --arg image_name "$IMAGE_NAME" --arg distribution "$DISTRIBUTION" \
+  '.image_name = $image_name | .distribution = $distribution')
 
+  # Print the updated JSON
+  echo "$updated_json" > request.json
+elif [ ${TEMPLATE_NAME} == "iso-qcow-request" ];
+then 
+    cp iso-qcow-request.json 
+    updated_json=$(echo  "tempaltes/iso-qcow-request.json" | jq --arg image_name "$IMAGE_NAME" \
+    --arg distribution "$DISTRIBUTION" \
+    --arg activation_key "$new_activation_key" \
+    --argjson organization "$RHC_ORG_ID" \
+    --argjson packages "$PACKAGES" \
+    '.image_name = $image_name | 
+    .distribution = $distribution | 
+    .customizations.subscription["activation-key"] = $activation_key | 
+    .customizations.subscription.organization = $organization | 
+    .customizations.packages = $packages')
+
+    # Print the updated JSON
+    echo "$updated_json" > request.json
+else 
+  echo "Invalid Template Name"
+  exit 1
+fi
 
 curl --silent \
     --request POST \

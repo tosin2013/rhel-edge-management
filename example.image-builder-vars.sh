@@ -5,17 +5,16 @@ export RH_OFFLINE_TOKEN_PATH="$HOME/rh-api-offline-token"
 
 #########################################################
 ## Required variables
-export CREATE_DEVICE_NAME_GROUP=true
-export CREATE_IMAGE=true
-export DEVICE_GROUP_NAME="my-device-name-group"
+export DOWNLOAD_TYPE="iso" # qcow2, iso, ova or vmdk
+export TEMPLATE_NAME="iso-qcow-request" # iso-qcow-request, demo-request.json see templates directory
 
 #########################################################
 ## Image Atrributes
 export IMAGE_NAME="test-image"
 export USERNAME="admin"
-export DISTRIBUTION="rhel-90"
+export DISTRIBUTION="rhel-92"
 export DESCRIPTION="sample description"
-export PACKAGES="curl net-tools podman tar bind-utils git"
+export PACKAGES='["curl", "net-tools", "podman", "tar", "bind-utils", "git"]'
 export ARCH="x86_64"
 
 #########################################################
