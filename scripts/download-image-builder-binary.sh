@@ -13,7 +13,7 @@ if [ -z "$IMAGE_NAME" ]; then
   exit 1
 fi   
 
-INSTALLER_ID=$(curl -s -X 'GET' \
+ID=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/image-builder/v1/composes' \
   -H 'accept: application/json' \
   -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.image_name=="'${IMAGE_NAME}'") | .id')
