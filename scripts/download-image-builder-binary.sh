@@ -16,30 +16,35 @@ fi
 INSTALLER_ID=$(curl -s -X 'GET' \
   'https://console.redhat.com/api/image-builder/v1/composes' \
   -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.image_name=="'${IMAGE_NAME}'") | .InstallerID')
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data[0]| select(.image_name=="'${IMAGE_NAME}'") | .id')
 
-for i in 1 2 3 4 5
-do
-   echo "Checking iso $i "
-  INSTALLER_ID=$(curl -s -X 'GET' \
-  'https://console.redhat.com/api/image-builder/v1/composes' \
-  -H 'accept: application/json' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data['$i']| select(.image_name=="'${IMAGE_NAME}'") | .ID')
-  if [ ! -z ${INSTALLER_ID} ];
-  then 
-    NEW_ITEM=$i
-    break
-  fi
-done
+echo $ID
 
-if [ -z ${INSTALLER_ID} ];
+if [ -z ${ID} ];
+then
+  for i in 1 2 3 4 5
+  do
+    echo "Checking iso $i "
+    ID=$(curl -s -X 'GET' \
+    'https://console.redhat.com/api/image-builder/v1/composes' \
+    -H 'accept: application/json' \
+    -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.data['$i']| select(.image_name=="'${IMAGE_NAME}'") | .id')
+    if [ ! -z ${ID} ];
+    then 
+      break
+    fi
+  done
+fi
+
+
+if [ -z ${ID} ];
 then 
   echo "INSTALLER ID is empty"
   exit 1
 fi 
 
 DOWNLOAD_URL=$(curl -s -X 'GET' \
-  'https://console.redhat.com/api/image-builder/v1/composes/'${INSTALLER_ID}'' \
+  'https://console.redhat.com/api/image-builder/v1/composes/'${ID}'' \
   -H 'accept: application/json' \
   -H 'Authorization: Bearer '$ACTIVE_TOKEN'' | jq '.image_status.upload_status.options.url')
 
