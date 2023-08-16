@@ -13,7 +13,7 @@ export DEVICE_GROUP_NAME="my-device-name-group"
 ## Image Atrributes
 export IMAGE_NAME="test-image"
 export USERNAME="admin"
-export DISTRIBUTION="rhel-86"
+export DISTRIBUTION="rhel-90"
 export DESCRIPTION="sample description"
 export PACKAGES="curl net-tools podman tar bind-utils git"
 export ARCH="x86_64"

@@ -13,11 +13,6 @@ if [ -z "$IMAGE_NAME" ]; then
   exit 1
 fi
 
-if [ -z $PACKAGES ]; then
-  echo "No packages found. Please set PACKAGES in image-builder-vars.sh"
-  exit 1
-fi
-
 if [ -z $DESCRIPTION ]; then
   echo "No description found. Please set DESCRIPTION in image-builder-vars.sh"
   exit 1
@@ -46,7 +41,7 @@ fi
 cat >request.json <<END
 {
   "image_name": "${IMAGE_NAME}",
-  "distribution": "rhel-90",
+  "distribution": "${DISTRIBUTION}",
   "image_requests": [
     {
       "architecture": "x86_64",
