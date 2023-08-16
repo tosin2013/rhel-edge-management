@@ -24,4 +24,4 @@ UUID=$1
 curl -X 'DELETE' \
   'https://console.redhat.com/api/image-builder/v1/composes/'${UUID}'' \
   -H 'accept: */*' \
-  -H 'Authorization: Bearer '$ACTIVE_TOKEN'
+  -H 'Authorization: Bearer '$ACTIVE_TOKEN''
