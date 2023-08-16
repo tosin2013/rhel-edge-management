@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source authenticate-to-api.sh
-source image-builder-vars
+source image-builder-vars.sh
 
 if [ -z "$ACTIVE_TOKEN" ]; then
   echo "No active token found. Please run authenticate-to-api.sh first."
