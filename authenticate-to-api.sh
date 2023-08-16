@@ -2,7 +2,7 @@
 if [ -f rhel-edge-vars.sh ];
 then 
   source rhel-edge-vars.sh
-elif 
+elif [ -f image-builder-vars.sh ];
   source image-builder-vars.sh
 else 
   echo "No vars file found. Please set vars in rhel-edge-vars.sh or image-builder-vars.sh"
