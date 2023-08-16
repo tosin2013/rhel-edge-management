@@ -13,7 +13,7 @@ if [ -z "$IMAGE_NAME" ]; then
   exit 1
 fi
 
-if [ -z $1 ]l;
+if [ -z $1 ];
 then
   echo "No UUID found. ./delete-image-builder.sh d71c7012-d2b9-465a-9a23-f227060c0241"
   exit 1
