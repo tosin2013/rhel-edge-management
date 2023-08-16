@@ -67,6 +67,3 @@ curl --silent \
     --header "Content-Type: application/json" \
     --data @request.json \
     https://console.redhat.com/api/image-builder/v1/compose
-
-
-rm -rf /tmp/packages.txt /tmp/packages_escaped.txt /tmp/post_data.txt
