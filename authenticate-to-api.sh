@@ -1,5 +1,14 @@
 #!/bin/bash
-source rhel-edge-vars.sh
+if [ -f rhel-edge-vars.sh ];
+then 
+  source rhel-edge-vars.sh
+elif 
+  source image-builder-vars.sh
+else 
+  echo "No vars file found. Please set vars in rhel-edge-vars.sh or image-builder-vars.sh"
+  exit 1
+fi
+
 
 #set -e
 export RH_OFFLINE_TOKEN="${RH_OFFLINE_TOKEN_PATH}"
